@@ -149,3 +149,70 @@ plt.title('Campo vectorial y solución numérica para la Ecuación Diferencial O
 plt.legend()
 plt.grid(True)
 plt.show()
+
+# Inciso 5
+
+def population_growth(t, p):
+    return (0.0225 * p) - (0.0003 * p**2)
+
+# Parámetros iniciales
+p0 = 25
+t0 = 0
+t_end = 10
+
+# Tamaños de paso
+h1 = 1
+h2 = 0.5
+
+# Número de pasos
+n1 = int((t_end - t0) / h1)
+n2 = int((t_end - t0) / h2)
+
+# Resolviendo con h = 1 año
+t_values1, p_values1 = euler_method(population_growth, t0, p0, h1, n1)
+
+# Resolviendo con h = 0.5 años
+t_values2, p_values2 = euler_method(population_growth, t0, p0, h2, n2)
+
+# Población límite
+p_limit = 75
+
+# Porcentajes para h = 1 año
+p_5_years_h1 = p_values1[int(5 / h1)]
+p_10_years_h1 = p_values1[int(10 / h1)]
+percentage_5_years_h1 = (p_5_years_h1 / p_limit) * 100
+percentage_10_years_h1 = (p_10_years_h1 / p_limit) * 100
+
+# Porcentajes para h = 0.5 años
+p_5_years_h2 = p_values2[int(5 / h2)]
+p_10_years_h2 = p_values2[int(10 / h2)]
+percentage_5_years_h2 = (p_5_years_h2 / p_limit) * 100
+percentage_10_years_h2 = (p_10_years_h2 / p_limit) * 100
+
+# Imprimir resultados
+print(f"Porcentaje de población límite alcanzado después de 5 años (h = 1): {percentage_5_years_h1:.2f}%")
+print(f"Porcentaje de población límite alcanzado después de 10 años (h = 1): {percentage_10_years_h1:.2f}%")
+print(f"Porcentaje de población límite alcanzado después de 5 años (h = 0.5): {percentage_5_years_h2:.2f}%")
+print(f"Porcentaje de población límite alcanzado después de 10 años (h = 0.5): {percentage_10_years_h2:.2f}%")
+
+# Crear el gráfico
+plt.figure(figsize=(10, 6))
+
+# Graficar la población para h = 1 año
+plt.plot(t_values1, p_values1, 'r--', label='Paso de 1 año')
+
+# Graficar la población para h = 0.5 años
+plt.plot(t_values2, p_values2, 'b-', label='Paso de 0.5 años')
+
+# Graficar la población límite
+plt.axhline(y=p_limit, color='g', linestyle='--', label='Población límite (75)')
+
+# Configurar el gráfico
+plt.xlabel('Tiempo (años)')
+plt.ylabel('Población')
+plt.title('Crecimiento Poblacional')
+plt.legend()
+plt.grid(True)
+
+# Mostrar el gráfico
+plt.show()
